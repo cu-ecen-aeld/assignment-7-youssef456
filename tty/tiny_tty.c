@@ -26,7 +26,6 @@
 #include <linux/sched/signal.h>
 #include <linux/seq_file.h>
 #include <linux/uaccess.h>
-#include <linux/version.h>
 
 #define DRIVER_VERSION "v2.0"
 #define DRIVER_AUTHOR "Greg Kroah-Hartman <greg@kroah.com>"
@@ -194,11 +193,7 @@ exit:
 	return retval;
 }
 
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 14, 0)) 
 static int tiny_write_room(struct tty_struct *tty)
-#else
-static unsigned int tiny_write_room(struct tty_struct *tty)
-#endif
 {
 	struct tiny_serial *tiny = tty->driver_data;
 	int room = -EINVAL;
@@ -551,10 +546,8 @@ static void __exit tiny_exit(void)
 	struct tiny_serial *tiny;
 	int i;
 
-	for (i = 0; i < TINY_TTY_MINORS; ++i) {
+	for (i = 0; i < TINY_TTY_MINORS; ++i)
 		tty_unregister_device(tiny_tty_driver, i);
-		tty_port_destroy(tiny_tty_port + i);
-	}
 	tty_unregister_driver(tiny_tty_driver);
 
 	/* shut down all of the timers and free the memory */
