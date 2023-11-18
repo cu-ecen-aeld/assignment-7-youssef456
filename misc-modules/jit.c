@@ -32,7 +32,7 @@
 #include <linux/slab.h>
 #include <linux/version.h>
 #include <asm/hardirq.h>
-
+#include "internal.h"
 #include "proc_ops_version.h"
 /*
  * This module is a silly one: it only embeds short code fragments
