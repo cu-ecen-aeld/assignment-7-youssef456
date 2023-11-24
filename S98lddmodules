@@ -5,12 +5,14 @@ case "$1" in
          echo "scull_load and misc modules"
          /usr/bin/scull_load
          /usr/bin/module_load faulty  
+         modprobe aesdchar
          modprobe hello       
          ;;
     stop)
          echo "scull_unload and misc modules"
          /usr/bin/scull_unload
          /usr/bin/module_unload faulty
+         rmmod aesdchar
          rmmod hello
          ;;
     *)
